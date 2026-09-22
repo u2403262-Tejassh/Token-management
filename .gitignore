@@ -1,0 +1,11 @@
+node_modules
+client/dist
+client/node_modules
+server/node_modules
+.env.local
+dist
+.DS_Store
+.vercel
+# Keep server/.env for Atlas demo - remove this line if you want to hide credentials
+!server/.env
+!server/.env.example

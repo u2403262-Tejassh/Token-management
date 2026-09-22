@@ -1,6 +1,10 @@
 // Authentication middleware to verify JWT and attach req.userId.
 const jwt = require("jsonwebtoken");
 
+if (!process.env.JWT_SECRET) {
+  process.env.JWT_SECRET = "college_viva_secret_2026_token_system_jwt";
+}
+
 module.exports = function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
 

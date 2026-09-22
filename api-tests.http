@@ -1,0 +1,101 @@
+### Token Management System - REST API Tests
+### Compatible with VS Code REST Client extension
+@baseUrl = http://localhost:4000/api
+@jwtToken = {{login.response.body.jwt}}
+
+### 1. Register Organizer
+# @name register
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Dr. Sarah",
+  "email": "sarah@example.com",
+  "password": "password123"
+}
+
+### 2. Login Organizer (Stores JWT for subsequent calls)
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "sarah@example.com",
+  "password": "password123"
+}
+
+### 3. Create an Event
+# @name createEvent
+POST {{baseUrl}}/events
+Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
+
+{
+  "title": "General OPD Consultation"
+}
+
+@eventId = {{createEvent.response.body._id}}
+
+### 4. Get My Events
+GET {{baseUrl}}/events
+Authorization: Bearer {{jwtToken}}
+
+### 5. Get Event by ID
+GET {{baseUrl}}/events/{{eventId}}
+Authorization: Bearer {{jwtToken}}
+
+### 6. Update Event Title
+PUT {{baseUrl}}/events/{{eventId}}
+Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
+
+{
+  "title": "General OPD - Room 101"
+}
+
+### 7. Public: Get Event Title (No login)
+GET {{baseUrl}}/public/events/{{eventId}}
+
+### 8. Public: Join Queue (Issue Token #1)
+# @name joinQueue
+POST {{baseUrl}}/public/events/{{eventId}}/join
+Content-Type: application/json
+
+{
+  "name": "Alice Smith"
+}
+
+@tokenId = {{joinQueue.response.body._id}}
+
+### 9. Public: Join Queue Again (Issue Token #2)
+POST {{baseUrl}}/public/events/{{eventId}}/join
+Content-Type: application/json
+
+{
+  "name": "Bob Johnson"
+}
+
+### 10. Public: Join with Empty Name (Should return 400 Bad Request)
+POST {{baseUrl}}/public/events/{{eventId}}/join
+Content-Type: application/json
+
+{
+  "name": ""
+}
+
+### 11. Organizer: Get Tokens for Event (Sorted by arrival)
+GET {{baseUrl}}/tokens?eventId={{eventId}}
+Authorization: Bearer {{jwtToken}}
+
+### 12. Organizer: Mark Token as Done
+PUT {{baseUrl}}/tokens/{{tokenId}}
+Content-Type: application/json
+Authorization: Bearer {{jwtToken}}
+
+{
+  "status": "done"
+}
+
+### 13. Organizer: Delete Event (Also deletes its tokens)
+DELETE {{baseUrl}}/events/{{eventId}}
+Authorization: Bearer {{jwtToken}}

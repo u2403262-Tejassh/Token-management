@@ -1,7 +1,7 @@
 {
   "name": "token-system-server",
   "version": "1.0.0",
-  "description": "Backend for Token Management System",
+  "description": "Backend for Token Management System (MongoDB Atlas only)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -16,7 +16,6 @@
     "mongoose": "^8.3.4"
   },
   "devDependencies": {
-    "mongodb-memory-server": "^11.2.0",
     "nodemon": "^3.1.0"
   }
 }

@@ -1,5 +1,5 @@
-// API service: connects React frontend to Express + MongoDB Atlas backend
-// Replaces localStorage mock with real REST calls via /api
+// API service: connects React frontend to the Express + MongoDB Atlas backend
+// using fetch() REST calls. localStorage is only used to keep the JWT login session.
 
 const API_BASE = ""; // relative - Vite proxy handles /api -> localhost:4000 in dev, Vercel rewrites in prod
 
@@ -87,10 +87,6 @@ export const storage = {
   logout: () => {
     localStorage.removeItem("token_sys_session");
     localStorage.removeItem("jwt");
-    // Cleanup old localStorage keys from previous mock implementation
-    localStorage.removeItem("token_sys_users");
-    localStorage.removeItem("token_sys_events");
-    localStorage.removeItem("token_sys_tokens");
   },
 
   // --- EVENTS ---

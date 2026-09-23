@@ -2,13 +2,10 @@
   "name": "token-system",
   "version": "1.0.0",
   "private": true,
-  "description": "Full-stack Token Management System with localStorage and Vercel deployment support",
+  "description": "Full-stack Token Management System with MongoDB Atlas and Vercel deployment support",
   "scripts": {
     "build": "cd client && npm install && npm run build",
     "vercel-build": "cd client && npm install && npm run build",
     "dev": "npm --prefix client run dev"
-  },
-  "dependencies": {
-    "dotenv": "^16.4.5"
   }
 }

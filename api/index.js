@@ -1,7 +1,12 @@
 // Vercel Serverless Function entry for Express API
 // Handles all /api/* requests via Express app with MongoDB Atlas
 
-require("dotenv").config({ path: __dirname + "/../server/.env" });
+// dotenv is only needed locally - on Vercel env vars come from Dashboard
+try {
+  require("dotenv").config({ path: __dirname + "/../server/.env" });
+} catch (e) {
+  // ignore on Vercel
+}
 if (!process.env.JWT_SECRET) {
   process.env.JWT_SECRET = "college_viva_secret_2026_token_system_jwt";
 }
